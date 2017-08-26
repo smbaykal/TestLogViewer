@@ -156,7 +156,7 @@ namespace TestLogViewer
                         serials.Sort();
                         var s = "";
                         foreach (var serial in serials)
-                            s += serial + "\n";
+                            s += serial + "\r\n";
                         if (serials.Count < 10)
                             MessageBox.Show(s, "These are not found in logs");
                         else
@@ -178,7 +178,7 @@ namespace TestLogViewer
                     serials.Sort();
                     var s = "";
                     foreach (var serial in serials)
-                        s += serial + "\n";
+                        s += serial + "\r\n";
                     if (serials.Count < 10)
                         MessageBox.Show(s, "These are not found in logs");
                     else
@@ -489,10 +489,15 @@ namespace TestLogViewer
 
             foreach (DataGridViewColumn column in dataGridViewLogs.Columns)
                 dt.Columns.Add(column.HeaderText, column.ValueType);
-
-            foreach (DataGridViewRow row in dataGridViewLogs.SelectedRows)
+            List<int> addedRows = new List<int>();
+            foreach (DataGridViewCell selectedCell in dataGridViewLogs.SelectedCells)
             {
-                dt.Rows.Add();
+                var row = dataGridViewLogs.Rows[selectedCell.RowIndex];
+                if (!addedRows.Contains(selectedCell.RowIndex))
+                {
+                    dt.Rows.Add();
+                    addedRows.Add(selectedCell.RowIndex);
+                }
                 foreach (DataGridViewCell cell in row.Cells)
                     dt.Rows[dt.Rows.Count - 1][cell.ColumnIndex] = cell.Value.ToString();
             }
@@ -813,6 +818,31 @@ namespace TestLogViewer
         {
             labelStatus.Text = message;
             MessageBox.Show(exc.Message + "\n" + exc.StackTrace, exc.Source);
+        }
+        
+
+        private void dataGridViewLogs_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) // left click
+            {
+                if (Control.ModifierKeys == Keys.Control)
+                {
+                    dataGridViewLogs.ClearSelection();
+                    for (int i = 0; i < dataGridViewLogs.RowCount; i++)
+                    {
+                        dataGridViewLogs.Rows[i].Cells[e.ColumnIndex].Selected = true;
+                    }
+                }
+                else if (Control.ModifierKeys == Keys.Shift)
+                {
+                    dataGridViewLogs.ClearSelection();
+                    for (int i = 0; i < dataGridViewLogs.ColumnCount; i++)
+                    {
+                        dataGridViewLogs.Rows[e.RowIndex].Cells[i].Selected = true;
+                    }
+                }
+
+            }
         }
     }
 }

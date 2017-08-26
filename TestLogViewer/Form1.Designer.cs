@@ -72,10 +72,11 @@
             this.dataGridViewLogs.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewLogs.Name = "dataGridViewLogs";
             this.dataGridViewLogs.ReadOnly = true;
-            this.dataGridViewLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewLogs.Size = new System.Drawing.Size(910, 506);
             this.dataGridViewLogs.TabIndex = 0;
             this.dataGridViewLogs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewLogs_CellDoubleClick);
+            this.dataGridViewLogs.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLogs_CellMouseClick);
             this.dataGridViewLogs.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLogs_ColumnHeaderMouseClick);
             this.dataGridViewLogs.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLogs_ColumnHeaderMouseDoubleClick);
             this.dataGridViewLogs.Paint += new System.Windows.Forms.PaintEventHandler(this.dataGridViewLogs_Paint);
